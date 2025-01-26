@@ -22,8 +22,9 @@ public class BaseTest {
 
     @BeforeAll
     static void setConfig() {
-        Configuration.browser = "chrome";
-        Configuration.browserSize = "1920x1080";
+        Configuration.browser = System.getProperty("browser", "chrome");
+        Configuration.browserVersion = System.getProperty("browser.version", "126.0");
+        Configuration.browserSize = System.getProperty("browser.size", "1920x1080");
         Configuration.pageLoadStrategy = "eager";
         Configuration.baseUrl = "https://demoqa.com";
         Configuration.remote = "https://" + SELENOID_LOGIN + ":" + SELENOID_PASSWORD + "@" + SELENOID_URL + "/wd/hub";
@@ -34,7 +35,10 @@ public class BaseTest {
                 "enableVideo", true
         ));
         Configuration.browserCapabilities = capabilities;
+    }
 
+    @BeforeEach
+    void addAllureListener() {
         SelenideLogger.addListener("allure", new AllureSelenide());
     }
 
