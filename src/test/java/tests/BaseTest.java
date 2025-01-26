@@ -46,7 +46,8 @@ public class BaseTest {
     void addAttachmentsAndClose() {
         Attach.screenshotAs("Last screenshot");
         Attach.pageSource();
-        Attach.browserConsoleLogs();
+        if (!Configuration.browser.equals("firefox"))
+            Attach.browserConsoleLogs();
         Attach.addVideo();
         closeWebDriver();
     }
